@@ -64,9 +64,6 @@ offset_bottom = 640.0
 theme_override_font_sizes/normal_font_size = 51
 text = "ffffff"
 
-[node name="Camera2D" type="Camera2D" parent="Office/Node2D"]
-position = Vector2(580, 326)
-
 [node name="floor" type="MeshInstance3D" parent="Office"]
 transform = Transform3D(0.898068, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.14152)
 mesh = SubResource("PlaneMesh_7un73")
