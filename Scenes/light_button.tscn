@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://b7xi0scr5l7aw"]
 
-[ext_resource type="Material" uid="uid://c4sj6qvhn45bd" path="res://Scenes/LightButtonMaterial.tres" id="1_iuxks"]
+[ext_resource type="Material" uid="uid://c4sj6qvhn45bd" path="res://Materials/LightButtonMaterial.tres" id="1_ctu5y"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_i4ipv"]
-material = ExtResource("1_iuxks")
+material = ExtResource("1_ctu5y")
 size = Vector3(0.4, 0.4, 0.4)
 
 [node name="LightButton" type="Area3D"]

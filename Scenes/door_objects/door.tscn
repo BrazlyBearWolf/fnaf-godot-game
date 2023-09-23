@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://difus73thjkia"]
+[gd_scene load_steps=10 format=3 uid="uid://difus73thjkia"]
 
 [ext_resource type="Material" uid="uid://tfh268rt715v" path="res://Materials/door.material" id="1_3rn4f"]
-[ext_resource type="Script" path="res://Scenes/doorLeftScript.gd" id="1_26vug"]
+[ext_resource type="Script" path="res://Scripts/Door_scripts/doorLeftScript.gd" id="1_qp8fb"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_uktt3"]
 material = ExtResource("1_3rn4f")
@@ -31,7 +31,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(-1.88, 0, 1.1)]
+"values": [Vector3(-1.88, 1.955, 1.1)]
 }
 
 [sub_resource type="Animation" id="Animation_dd4dc"]
@@ -102,19 +102,51 @@ tracks/2/keys = {
 "values": [Vector3(-1.88, 0, 1.1), Vector3(-1.88, 1.955, 1.1)]
 }
 
+[sub_resource type="Animation" id="Animation_lygjg"]
+resource_name = "open_right_door"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.88, 0, 1.1), Vector3(1.88, 1.955, 1.1)]
+}
+
+[sub_resource type="Animation" id="Animation_vcdct"]
+resource_name = "close_right_door"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.88, 1.955, 1.1), Vector3(1.88, 0, 1.1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4kwsh"]
 _data = {
 "RESET": SubResource("Animation_2i8uc"),
 "close_door": SubResource("Animation_dd4dc"),
-"open_door": SubResource("Animation_gd1ri")
+"close_right_door": SubResource("Animation_vcdct"),
+"open_door": SubResource("Animation_gd1ri"),
+"open_right_door": SubResource("Animation_lygjg")
 }
 
 [node name="DoorLeft" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.45058e-08, 0)
-script = ExtResource("1_26vug")
+script = ExtResource("1_qp8fb")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.88, 0, 1.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.88, 1.955, 1.1)
 mesh = SubResource("BoxMesh_uktt3")
 skeleton = NodePath("../..")
 

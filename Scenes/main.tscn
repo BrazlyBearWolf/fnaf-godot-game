@@ -1,10 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://50kom4qaawgj"]
+[gd_scene load_steps=14 format=3 uid="uid://50kom4qaawgj"]
 
-[ext_resource type="PackedScene" uid="uid://difus73thjkia" path="res://Scenes/door.tscn" id="1_p4c8v"]
-[ext_resource type="Script" path="res://Scenes/CameraScript.gd" id="1_rcy6p"]
+[ext_resource type="Script" path="res://Scripts/CameraScript.gd" id="1_5f3g1"]
+[ext_resource type="PackedScene" uid="uid://difus73thjkia" path="res://Scenes/door_objects/door.tscn" id="1_p4c8v"]
 [ext_resource type="PackedScene" uid="uid://d277ithowb5ox" path="res://Scenes/door_button.tscn" id="2_1usyn"]
 [ext_resource type="PackedScene" uid="uid://b7xi0scr5l7aw" path="res://Scenes/light_button.tscn" id="3_vmq2t"]
-[ext_resource type="Script" path="res://Scenes/door_button.gd" id="4_rx8vh"]
+[ext_resource type="Script" path="res://Scripts/Door_scripts/door_button.gd" id="4_1hc50"]
+[ext_resource type="PackedScene" uid="uid://wl5lgdkwykf2" path="res://Scenes/door_objects/doorRight.tscn" id="6_8c2ka"]
+[ext_resource type="Script" path="res://Scripts/Door_scripts/doorRightScript.gd" id="7_a405u"]
+[ext_resource type="Script" path="res://Scripts/Door_scripts/door_button_right.gd" id="8_lg67j"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7un73"]
 size = Vector2(4, 3)
@@ -40,7 +43,7 @@ environment = SubResource("Environment_np8ff")
 fov = 41.4
 near = 0.017
 far = 9.5
-script = ExtResource("1_rcy6p")
+script = ExtResource("1_5f3g1")
 
 [node name="walls" type="Node3D" parent="Office"]
 
@@ -80,7 +83,7 @@ one_shot = true
 
 [node name="DoorButtonLeft" parent="Office" instance=ExtResource("2_1usyn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.79992, 0.533764, 1.69205)
-script = ExtResource("4_rx8vh")
+script = ExtResource("4_1hc50")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/DoorButtonLeft"]
 shape = SubResource("BoxShape3D_071tq")
@@ -94,7 +97,32 @@ light_volumetric_fog_energy = 2.653
 light_size = 0.356
 omni_range = 0.719808
 
+[node name="DoorButtonright" parent="Office" instance=ExtResource("2_1usyn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8102, 0.533764, 1.69918)
+script = ExtResource("8_lg67j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Office/DoorButtonright"]
+shape = SubResource("BoxShape3D_071tq")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Office/DoorButtonright"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0131565, 0, -0.01078)
+light_color = Color(0.941176, 0.231373, 0.176471, 1)
+light_energy = 0.062
+light_indirect_energy = 6.951
+light_volumetric_fog_energy = 2.653
+light_size = 0.356
+omni_range = 0.719808
+
 [node name="LightButton" parent="Office" instance=ExtResource("3_vmq2t")]
+
+[node name="doorRight" parent="Office" instance=ExtResource("6_8c2ka")]
+script = ExtResource("7_a405u")
+
+[node name="Timer" type="Timer" parent="Office/doorRight"]
+wait_time = 0.299
+one_shot = true
 
 [connection signal="input_event" from="Office/DoorButtonLeft" to="Office/DoorLeft" method="_on_door_button_left_input_event"]
 [connection signal="input_event" from="Office/DoorButtonLeft" to="Office/DoorButtonLeft" method="_on_input_event"]
+[connection signal="input_event" from="Office/DoorButtonright" to="Office/DoorButtonright" method="_on_input_event"]
+[connection signal="input_event" from="Office/DoorButtonright" to="Office/doorRight" method="_on_door_buttonright_input_event"]

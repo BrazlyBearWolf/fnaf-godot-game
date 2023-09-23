@@ -1,9 +1,6 @@
 extends Node3D
-var isLeftDoorOpen = false
-var isLeftDoorIndex = 0
 
 
-var canOpenDoor = false
 @onready var doorCooldown = $Timer
 
 
@@ -15,16 +12,16 @@ func _ready():
 
 func _Open_Left_door():
 
-	isLeftDoorIndex = isLeftDoorIndex + 1
-	if isLeftDoorIndex > 1:
-		isLeftDoorIndex = 0
-	if isLeftDoorIndex == 1:
-		isLeftDoorOpen = true
-		print("open")
+	PlayerVariables.leftDoorIndex = PlayerVariables.leftDoorIndex + 1
+	if PlayerVariables.leftDoorIndex > 1:
+		PlayerVariables.leftDoorIndex = 0
+	if PlayerVariables.leftDoorIndex == 1:
+		PlayerVariables.isLeftDoorOpen = true
+		print("left open")
 		$AnimationPlayer.play("open_door")
-	if isLeftDoorIndex == 0:
-		isLeftDoorOpen = false
-		print("close")
+	if PlayerVariables.leftDoorIndex == 0:
+		PlayerVariables.isLeftDoorOpen = false
+		print("left close")
 		$AnimationPlayer.play("close_door")
 	doorCooldown.start()
 	
@@ -34,16 +31,16 @@ func _Open_Left_door():
 func _process(delta):
 
 	if doorCooldown.is_stopped():
-		canOpenDoor = true
+		PlayerVariables.canOpenLeftDoor = true
 	else:
-		canOpenDoor = false
+		PlayerVariables.canOpenLeftDoor = false
 
-	if Input.is_action_just_pressed("ToggleDoor") and canOpenDoor == true:
+	if Input.is_action_just_pressed("ToggleLeftDoor") and PlayerVariables.canOpenLeftDoor == true:
 		_Open_Left_door()
 	pass
 
 
 func _on_door_button_left_input_event(camera, event, position, normal, shape_idx):
-	if event is InputEventMouseButton and canOpenDoor == true:
+	if event is InputEventMouseButton and PlayerVariables.canOpenLeftDoor == true:
 		_Open_Left_door()
 	pass # Replace with function body.
