@@ -2,13 +2,10 @@ extends Node
 
 var power = 3
 
-@onready var timer = $Timer
-
+var timeSecs = 5
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	timer.wait_time = 5
-	timer.start()
 	$Usage2.hide()
 	$Usage3.hide()
 
@@ -18,21 +15,22 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
-	print(timer.time_left)
+	timeSecs = timeSecs - delta * PlayerVariables.powerUsage
 	
-	timer.time_left *- PlayerVariables.powerUsage
+	print(timeSecs)
+	
 	if PlayerVariables.powerUsage >1:
 		$Usage2.show()
-		timer.wait_time = 4
+		
 	if PlayerVariables.powerUsage >2:
 		$Usage3.show()
-		timer.wait_time = 2
+		
 	if PlayerVariables.powerUsage < 3:
 		$Usage3.hide()
-		timer.wait_time = 4
+		
 	if PlayerVariables.powerUsage < 2:
 		$Usage2.hide()
-		timer.wait_time = 5
+	
 	
 	print(power)
 	
@@ -40,9 +38,9 @@ func _process(delta):
 	
 	if PlayerVariables.powerShutdown == false:
 		
-		if timer.is_stopped():
+		if timeSecs <= 0:
 			power = power - 1
-			timer.start()
+			timeSecs = 5
 
 	if power <=0:
 		PlayerVariables.powerShutdown = true
