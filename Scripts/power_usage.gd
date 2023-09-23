@@ -1,6 +1,6 @@
 extends Node
 
-var power = 3
+var power = 100
 
 var timeSecs = 5
 
@@ -17,8 +17,6 @@ func _process(delta):
 	
 	timeSecs = timeSecs - delta * PlayerVariables.powerUsage
 	
-	print(timeSecs)
-	
 	if PlayerVariables.powerUsage >1:
 		$Usage2.show()
 		
@@ -32,7 +30,7 @@ func _process(delta):
 		$Usage2.hide()
 	
 	
-	print(power)
+
 	
 	$RichTextLabel.text = "power: " + str(power) + "%"
 	
