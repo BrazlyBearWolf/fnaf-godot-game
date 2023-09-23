@@ -44,7 +44,7 @@ offset_bottom = 219.0
 theme_override_font_sizes/normal_font_size = 101
 
 [node name="Timer" type="Timer" parent="Office/clock"]
-wait_time = 1.24
+wait_time = 45.0
 one_shot = true
 
 [node name="Usage" type="Node2D" parent="Office"]
