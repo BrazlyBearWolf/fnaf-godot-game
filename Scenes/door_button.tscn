@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://d277ithowb5ox"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_icxey"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i4ipv"]
+material = SubResource("StandardMaterial3D_icxey")
+size = Vector3(0.4, 0.4, 0.4)
+
+[node name="DoorButton" type="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.79992, 0.533764, 1.86725)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.343798, 0, 0, 0, 0.259729, 0, 0, 0, 0.234648, 0, 0, 0)
+mesh = SubResource("BoxMesh_i4ipv")

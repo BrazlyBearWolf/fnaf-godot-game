@@ -1,0 +1,100 @@
+[gd_scene load_steps=11 format=3 uid="uid://50kom4qaawgj"]
+
+[ext_resource type="PackedScene" uid="uid://difus73thjkia" path="res://Scenes/door.tscn" id="1_p4c8v"]
+[ext_resource type="Script" path="res://Scenes/CameraScript.gd" id="1_rcy6p"]
+[ext_resource type="PackedScene" uid="uid://d277ithowb5ox" path="res://Scenes/door_button.tscn" id="2_1usyn"]
+[ext_resource type="PackedScene" uid="uid://b7xi0scr5l7aw" path="res://Scenes/light_button.tscn" id="3_vmq2t"]
+[ext_resource type="Script" path="res://Scenes/door_button.gd" id="4_rx8vh"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7un73"]
+size = Vector2(4, 3)
+
+[sub_resource type="Environment" id="Environment_np8ff"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_1yjkb"]
+size = Vector2(3.6, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_o2gru"]
+size = Vector2(3.6, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_071tq"]
+size = Vector3(0.167931, 0.145733, 0.180577)
+
+[node name="Main" type="Node3D"]
+
+[node name="Office" type="Node3D" parent="."]
+
+[node name="floor" type="MeshInstance3D" parent="Office"]
+transform = Transform3D(0.898068, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.14152)
+mesh = SubResource("PlaneMesh_7un73")
+skeleton = NodePath("../..")
+
+[node name="floor2" type="MeshInstance3D" parent="Office"]
+transform = Transform3D(0.898068, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0.929469, 1.14152)
+mesh = SubResource("PlaneMesh_7un73")
+skeleton = NodePath("../..")
+
+[node name="Camera3D" type="Camera3D" parent="Office"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000257373, 0.499416, 3.28737)
+environment = SubResource("Environment_np8ff")
+fov = 41.4
+near = 0.017
+far = 9.5
+script = ExtResource("1_rcy6p")
+
+[node name="walls" type="Node3D" parent="Office"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Office/walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.456899, -0.349618)
+mesh = SubResource("QuadMesh_1yjkb")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Office/walls"]
+transform = Transform3D(-1.32701e-08, 0, 1, 0, 1, 0, -0.303584, 0, -4.37114e-08, -1.80346, 0.456899, 2.08568)
+mesh = SubResource("QuadMesh_o2gru")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Office/walls"]
+transform = Transform3D(-1.32701e-08, 0, 1, 0, 1, 0, -0.303584, 0, -4.37114e-08, -1.80346, 0.456899, 0.198601)
+mesh = SubResource("QuadMesh_o2gru")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Office/walls"]
+transform = Transform3D(3.98102e-08, 0, -1, 0, 1, 0, 0.303584, 0, 1.31134e-07, 1.78578, 0.456899, 0.198601)
+mesh = SubResource("QuadMesh_o2gru")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Office/walls"]
+transform = Transform3D(3.98102e-08, 0, -1, 0, 1, 0, 0.303584, 0, 1.31134e-07, 1.78578, 0.456899, 2.08568)
+mesh = SubResource("QuadMesh_o2gru")
+skeleton = NodePath("../..")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Office"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.628352, 0.740143)
+
+[node name="DoorLeft" parent="Office" instance=ExtResource("1_p4c8v")]
+
+[node name="Timer" type="Timer" parent="Office/DoorLeft"]
+wait_time = 0.299
+one_shot = true
+
+[node name="DoorButtonLeft" parent="Office" instance=ExtResource("2_1usyn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.79992, 0.533764, 1.69205)
+script = ExtResource("4_rx8vh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Office/DoorButtonLeft"]
+shape = SubResource("BoxShape3D_071tq")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Office/DoorButtonLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0678686, 0, -0.01078)
+light_color = Color(0.941176, 0.231373, 0.176471, 1)
+light_energy = 0.062
+light_indirect_energy = 6.951
+light_volumetric_fog_energy = 2.653
+light_size = 0.356
+omni_range = 0.719808
+
+[node name="LightButton" parent="Office" instance=ExtResource("3_vmq2t")]
+
+[connection signal="input_event" from="Office/DoorButtonLeft" to="Office/DoorLeft" method="_on_door_button_left_input_event"]
+[connection signal="input_event" from="Office/DoorButtonLeft" to="Office/DoorButtonLeft" method="_on_input_event"]
