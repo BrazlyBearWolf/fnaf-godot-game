@@ -11,9 +11,9 @@ func _Toggle_Door_Light():
 	
 
 	if PlayerVariables.rightDoorIndex_int == 1:
-		light.show()
-	else:
 		light.hide()
+	else:
+		light.show()
 	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -22,7 +22,6 @@ func _process(delta):
 		light.hide()
 		
 
-	print(PlayerVariables.rightDoorIndex_int)
 
 
 func _on_input_event(camera, event, position, normal, shape_idx):
