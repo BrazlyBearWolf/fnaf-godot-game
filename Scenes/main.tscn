@@ -33,8 +33,9 @@ size = Vector3(0.167931, 0.0958041, 0.0998699)
 
 [node name="Office" type="Node3D" parent="."]
 
-[node name="clock" type="Node2D" parent="Office"]
+[node name="clock" type="Node2D" parent="Office" node_paths=PackedStringArray("countDownTimer")]
 script = ExtResource("1_2qt4j")
+countDownTimer = NodePath("Timer")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Office/clock"]
 offset_left = 688.0
@@ -44,7 +45,7 @@ offset_bottom = 219.0
 theme_override_font_sizes/normal_font_size = 101
 
 [node name="Timer" type="Timer" parent="Office/clock"]
-wait_time = 1.24
+wait_time = 45.0
 one_shot = true
 
 [node name="Usage" type="Node2D" parent="Office"]
@@ -126,15 +127,25 @@ skeleton = NodePath("../..")
 [node name="OmniLight3D" type="OmniLight3D" parent="Office"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.628352, 0.740143)
 
-[node name="DoorLeft" parent="Office" instance=ExtResource("1_p4c8v")]
+[node name="DoorLeft" parent="Office" node_paths=PackedStringArray("doorCooldown") instance=ExtResource("1_p4c8v")]
+doorCooldown = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="Office/DoorLeft"]
 wait_time = 0.299
 one_shot = true
 
-[node name="DoorButtonLeft" parent="Office" instance=ExtResource("2_1usyn")]
+[node name="doorRight" parent="Office" node_paths=PackedStringArray("doorCooldown") instance=ExtResource("6_8c2ka")]
+script = ExtResource("7_a405u")
+doorCooldown = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="Office/doorRight"]
+wait_time = 0.299
+one_shot = true
+
+[node name="DoorButtonLeft" parent="Office" node_paths=PackedStringArray("light") instance=ExtResource("2_1usyn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.79992, 0.533764, 1.69205)
 script = ExtResource("4_1hc50")
+light = NodePath("OmniLight3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/DoorButtonLeft"]
 shape = SubResource("BoxShape3D_071tq")
@@ -148,9 +159,10 @@ light_volumetric_fog_energy = 2.653
 light_size = 0.356
 omni_range = 0.719808
 
-[node name="DoorButtonright" parent="Office" instance=ExtResource("2_1usyn")]
+[node name="DoorButtonright" parent="Office" node_paths=PackedStringArray("light") instance=ExtResource("2_1usyn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8102, 0.533764, 1.69918)
 script = ExtResource("8_lg67j")
+light = NodePath("OmniLight3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/DoorButtonright"]
 shape = SubResource("BoxShape3D_071tq")
@@ -165,13 +177,6 @@ light_size = 0.356
 omni_range = 0.719808
 
 [node name="LightButton" parent="Office" instance=ExtResource("3_vmq2t")]
-
-[node name="doorRight" parent="Office" instance=ExtResource("6_8c2ka")]
-script = ExtResource("7_a405u")
-
-[node name="Timer" type="Timer" parent="Office/doorRight"]
-wait_time = 0.299
-one_shot = true
 
 [connection signal="input_event" from="Office/DoorButtonLeft" to="Office/DoorLeft" method="_on_door_button_left_input_event"]
 [connection signal="input_event" from="Office/DoorButtonLeft" to="Office/DoorButtonLeft" method="_on_input_event"]

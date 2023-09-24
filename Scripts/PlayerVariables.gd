@@ -1,13 +1,13 @@
 extends Node
 
-var isLeftDoorOpen = true
-var canOpenLeftDoor = false
-var leftDoorIndex = 1
+var isLeftDoorOpen_bool := true
+var canOpenLeftDoor_bool := false
+var leftDoorIndex_int := 1
 
-var isRightDoorOpen = true
-var canOpenRightDoor = false
-var rightDoorIndex = 1
+var isRightDoorOpen_bool := true
+var canOpenRightDoor_bool := false
+var rightDoorIndex_int := 1
 
 
-var powerUsage = 1
-var powerShutdown = false
+var powerUsage_int := 1
+var powerShutdown_bool := false

@@ -2,6 +2,21 @@
 
 [ext_resource type="Script" path="res://Scenes/WinScreen.gd" id="1_75lsj"]
 
+[sub_resource type="Animation" id="Animation_jis15"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(124, -270)]
+}
+
 [sub_resource type="Animation" id="Animation_4ln6w"]
 resource_name = "shift_end"
 length = 2.5
@@ -16,21 +31,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(124, -270), Vector2(124, -4)]
-}
-
-[sub_resource type="Animation" id="Animation_jis15"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(124, -270)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fjebn"]
