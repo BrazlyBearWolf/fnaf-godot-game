@@ -1,20 +1,14 @@
 extends Node3D
 
 
-@onready var doorCooldown = $Timer
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	
-	$AnimationPlayer.play("RESET")
-	pass # Replace with function body.
+@export var doorCooldown: Timer
 
 
 func _Shutdown_left_door():
-	PlayerVariables.leftDoorIndex = PlayerVariables.leftDoorIndex + 1
-	if PlayerVariables.leftDoorIndex == 1:
-		PlayerVariables.isLeftDoorOpen = true
+	PlayerVariables.leftDoorIndex_int = PlayerVariables.leftDoorIndex_int + 1
+	
+	if PlayerVariables.leftDoorIndex_int == 1:
+		PlayerVariables.isLeftDoorOpen_bool = true
 		$AnimationPlayer.play("open_door")
 		
 	else:
@@ -22,19 +16,21 @@ func _Shutdown_left_door():
 
 func _Open_Left_door():
 	
-	PlayerVariables.leftDoorIndex = PlayerVariables.leftDoorIndex + 1
-	if PlayerVariables.leftDoorIndex > 1:
-		PlayerVariables.leftDoorIndex = 0
-	if PlayerVariables.leftDoorIndex == 1:
-		PlayerVariables.isLeftDoorOpen = true
-		print("left open")
+	PlayerVariables.leftDoorIndex_int = PlayerVariables.leftDoorIndex_int + 1
+	
+	if PlayerVariables.leftDoorIndex_int > 1:
+		PlayerVariables.leftDoorIndex_int = 0
+		
+	if PlayerVariables.leftDoorIndex_int == 1:
+		PlayerVariables.isLeftDoorOpen_bool = true
 		$AnimationPlayer.play("open_door")
-		PlayerVariables.powerUsage = PlayerVariables.powerUsage - 1
-	if PlayerVariables.leftDoorIndex == 0:
-		PlayerVariables.isLeftDoorOpen = false
-		print("left close")
+		PlayerVariables.powerUsage_int = PlayerVariables.powerUsage_int - 1
+		
+	if PlayerVariables.leftDoorIndex_int == 0:
+		PlayerVariables.isLeftDoorOpen_bool = false
 		$AnimationPlayer.play("close_door")
-		PlayerVariables.powerUsage = PlayerVariables.powerUsage + 1
+		PlayerVariables.powerUsage_int = PlayerVariables.powerUsage_int + 1
+	
 	doorCooldown.start()
 	
 	pass
@@ -43,20 +39,19 @@ func _Open_Left_door():
 func _process(delta):
 
 	if doorCooldown.is_stopped():
-		PlayerVariables.canOpenLeftDoor = true
+		PlayerVariables.canOpenLeftDoor_bool = true
 	else:
-		PlayerVariables.canOpenLeftDoor = false
+		PlayerVariables.canOpenLeftDoor_bool = false
 
-	if Input.is_action_just_pressed("ToggleLeftDoor") and PlayerVariables.canOpenLeftDoor == true and PlayerVariables.powerShutdown == false:
-		_Open_Left_door()
-		
-	if PlayerVariables.powerShutdown == true:
+
+	if PlayerVariables.powerShutdown_bool == true:
 		_Shutdown_left_door()
 	
 	pass
 
 
 func _on_door_button_left_input_event(camera, event, position, normal, shape_idx):
-	if event is InputEventMouseButton and PlayerVariables.canOpenLeftDoor == true and PlayerVariables.powerShutdown == false:
+	if event is InputEventMouseButton and PlayerVariables.canOpenLeftDoor_bool == true \
+	and PlayerVariables.powerShutdown_bool == false:
 		_Open_Left_door()
 	pass # Replace with function body.

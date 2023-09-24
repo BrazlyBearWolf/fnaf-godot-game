@@ -1,8 +1,6 @@
 extends Area3D
 
-
-
-@onready var light = $OmniLight3D
+@export var light: OmniLight3D 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,7 +10,7 @@ func _ready():
 func _Toggle_Door_Light():
 	
 
-	if PlayerVariables.isRightDoorOpen == true:
+	if PlayerVariables.rightDoorIndex_int == 1:
 		light.show()
 	else:
 		light.hide()
@@ -20,16 +18,17 @@ func _Toggle_Door_Light():
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if PlayerVariables.powerShutdown == true:
+	if PlayerVariables.powerShutdown_bool == true:
 		light.hide()
-	if Input.is_action_just_pressed("ToggleRightDoor") and PlayerVariables.canOpenRightDoor == true and PlayerVariables.powerShutdown == false:
-		_Toggle_Door_Light()
-	pass
+		
 
-
+	print(PlayerVariables.rightDoorIndex_int)
 
 
 func _on_input_event(camera, event, position, normal, shape_idx):
-	if event is InputEventMouseButton and PlayerVariables.canOpenRightDoor == true and PlayerVariables.powerShutdown == false:
-		_Toggle_Door_Light()
+	if event is InputEventMouseButton \
+	and PlayerVariables.canOpenRightDoor_bool == true \
+	and PlayerVariables.powerShutdown_bool == false:
+
+		_Toggle_Door_Light()	
 	pass # Replace with function body.
