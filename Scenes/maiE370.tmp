@@ -1,16 +1,19 @@
-[gd_scene load_steps=25 format=3 uid="uid://50kom4qaawgj"]
+[gd_scene load_steps=22 format=3 uid="uid://50kom4qaawgj"]
 
 [ext_resource type="Script" path="res://Scripts/clock.gd" id="1_2qt4j"]
 [ext_resource type="Script" path="res://Scripts/CameraScript.gd" id="1_5f3g1"]
 [ext_resource type="Script" path="res://Scripts/power_usage.gd" id="1_7etot"]
 [ext_resource type="PackedScene" uid="uid://difus73thjkia" path="res://Scenes/door_objects/door.tscn" id="1_p4c8v"]
 [ext_resource type="PackedScene" uid="uid://d277ithowb5ox" path="res://Scenes/door_button.tscn" id="2_1usyn"]
-[ext_resource type="PackedScene" uid="uid://b7xi0scr5l7aw" path="res://Scenes/light_button.tscn" id="3_vmq2t"]
 [ext_resource type="Script" path="res://Scripts/Door_scripts/door_button.gd" id="4_1hc50"]
 [ext_resource type="PackedScene" uid="uid://wl5lgdkwykf2" path="res://Scenes/door_objects/doorRight.tscn" id="6_8c2ka"]
 [ext_resource type="Script" path="res://Scripts/Door_scripts/doorRightScript.gd" id="7_a405u"]
 [ext_resource type="Script" path="res://Scripts/Door_scripts/door_button_right.gd" id="8_lg67j"]
 [ext_resource type="Script" path="res://Scripts/SecurityDesk.gd" id="11_e841g"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_3q5bo"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ntl3m"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7un73"]
 size = Vector2(4, 3)
@@ -28,27 +31,63 @@ size = Vector3(0.167931, 0.0958041, 0.0998699)
 
 [sub_resource type="QuadMesh" id="QuadMesh_vo5rm"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_kitlk"]
-viewport_path = NodePath("CameraViewports/Cam01")
+[sub_resource type="ViewportTexture" id="ViewportTexture_380ak"]
+viewport_path = NodePath("Hallway/Cam01")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ndo3t"]
-viewport_path = NodePath("CameraViewports/Cam02")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_kclfk"]
-viewport_path = NodePath("CameraViewports/Cam03")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_x6s0a"]
-viewport_path = NodePath("Office/infoViewport")
-
-[sub_resource type="BoxMesh" id="BoxMesh_3q5bo"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_ntl3m"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_gcavw"]
+viewport_path = NodePath("Hallway/Cam02")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_bxarc"]
 
 [node name="Main" type="Node3D"]
 
 [node name="Office" type="Node3D" parent="."]
+
+[node name="clock" type="Node2D" parent="Office" node_paths=PackedStringArray("countDownTimer")]
+script = ExtResource("1_2qt4j")
+countDownTimer = NodePath("Timer")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Office/clock"]
+offset_left = 688.0
+offset_top = 25.0
+offset_right = 1122.0
+offset_bottom = 219.0
+theme_override_font_sizes/normal_font_size = 101
+
+[node name="Timer" type="Timer" parent="Office/clock"]
+wait_time = 45.0
+one_shot = true
+
+[node name="Usage" type="Node2D" parent="Office"]
+script = ExtResource("1_7etot")
+
+[node name="Usage1" type="MeshInstance2D" parent="Office/Usage"]
+position = Vector2(118, 85)
+scale = Vector2(84.25, 84.25)
+mesh = SubResource("BoxMesh_3q5bo")
+
+[node name="Usage2" type="MeshInstance2D" parent="Office/Usage"]
+modulate = Color(1, 0.784314, 0.74902, 1)
+position = Vector2(241, 85)
+scale = Vector2(84.25, 84.25)
+mesh = SubResource("BoxMesh_ntl3m")
+
+[node name="Usage3" type="MeshInstance2D" parent="Office/Usage"]
+modulate = Color(1, 0.427451, 0.356863, 1)
+position = Vector2(363, 85)
+scale = Vector2(84.25, 84.25)
+mesh = SubResource("BoxMesh_ntl3m")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Office/Usage"]
+offset_left = 45.0
+offset_top = 528.0
+offset_right = 425.0
+offset_bottom = 640.0
+theme_override_font_sizes/normal_font_size = 51
+text = "ffffff"
+
+[node name="Camera2D" type="Camera2D" parent="Office/Usage"]
+position = Vector2(580, 326)
 
 [node name="floor" type="MeshInstance3D" parent="Office"]
 transform = Transform3D(0.898068, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.14152)
@@ -147,12 +186,9 @@ light_volumetric_fog_energy = 2.653
 light_size = 0.356
 omni_range = 0.719808
 
-[node name="LightButton" parent="Office" instance=ExtResource("3_vmq2t")]
-
-[node name="SecurityDesk" type="Node3D" parent="Office" node_paths=PackedStringArray("cameras", "switchCooldown")]
+[node name="SecurityDesk" type="Node3D" parent="Office" node_paths=PackedStringArray("cameras")]
 script = ExtResource("11_e841g")
-cameras = [NodePath("cam01"), NodePath("cam02"), NodePath("cam03")]
-switchCooldown = NodePath("Cooldown")
+cameras = [NodePath("cam01"), NodePath("cam02")]
 
 [node name="screen" type="MeshInstance3D" parent="Office/SecurityDesk"]
 transform = Transform3D(0.569003, 0, 0, 0, 0.569003, 0, 0, 0, 1, -0.0704824, 0.504819, 2.03947)
@@ -160,74 +196,11 @@ mesh = SubResource("QuadMesh_vo5rm")
 
 [node name="cam01" type="Sprite3D" parent="Office/SecurityDesk"]
 transform = Transform3D(0.087, 0, 0, 0, 0.132426, 0, 0, 0, 0.063, -0.0701576, 0.507906, 2.04031)
-texture = SubResource("ViewportTexture_kitlk")
+texture = SubResource("ViewportTexture_380ak")
 
 [node name="cam02" type="Sprite3D" parent="Office/SecurityDesk"]
 transform = Transform3D(0.087, 0, 0, 0, 0.132426, 0, 0, 0, 0.063, -0.0701576, 0.507906, 2.04031)
-texture = SubResource("ViewportTexture_ndo3t")
-
-[node name="cam03" type="Sprite3D" parent="Office/SecurityDesk"]
-transform = Transform3D(0.087, 0, 0, 0, 0.132426, 0, 0, 0, 0.063, -0.0701576, 0.507906, 2.04031)
-texture = SubResource("ViewportTexture_kclfk")
-
-[node name="info" type="Sprite3D" parent="Office/SecurityDesk"]
-transform = Transform3D(0.0547912, 0, 0, 0, 0.0833997, 0, 0, 0, 0.063, -0.079838, 0.488529, 2.05575)
-texture = SubResource("ViewportTexture_x6s0a")
-
-[node name="Cooldown" type="Timer" parent="Office/SecurityDesk"]
-wait_time = 0.2
-one_shot = true
-
-[node name="infoViewport" type="SubViewport" parent="Office"]
-transparent_bg = true
-size = Vector2i(1037, 727)
-
-[node name="Usage" type="Node2D" parent="Office/infoViewport"]
-script = ExtResource("1_7etot")
-
-[node name="Usage1" type="MeshInstance2D" parent="Office/infoViewport/Usage"]
-position = Vector2(960, 170)
-scale = Vector2(84.25, 84.25)
-mesh = SubResource("BoxMesh_3q5bo")
-
-[node name="Usage2" type="MeshInstance2D" parent="Office/infoViewport/Usage"]
-modulate = Color(1, 0.784314, 0.74902, 1)
-position = Vector2(960, 270)
-scale = Vector2(84.25, 84.25)
-mesh = SubResource("BoxMesh_ntl3m")
-
-[node name="Usage3" type="MeshInstance2D" parent="Office/infoViewport/Usage"]
-modulate = Color(1, 0.427451, 0.356863, 1)
-position = Vector2(960, 370)
-scale = Vector2(84.25, 84.25)
-mesh = SubResource("BoxMesh_ntl3m")
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Office/infoViewport/Usage"]
-offset_left = 150.0
-offset_top = 520.0
-offset_right = 530.0
-offset_bottom = 632.0
-theme_override_font_sizes/normal_font_size = 51
-text = "ffffff"
-
-[node name="Camera2D" type="Camera2D" parent="Office/infoViewport/Usage"]
-position = Vector2(580, 326)
-
-[node name="clock" type="Node2D" parent="Office/infoViewport" node_paths=PackedStringArray("countDownTimer")]
-script = ExtResource("1_2qt4j")
-countDownTimer = NodePath("Timer")
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Office/infoViewport/clock"]
-offset_left = 720.69
-offset_top = -26.965
-offset_right = 1154.69
-offset_bottom = 167.035
-theme_override_font_sizes/normal_font_size = 101
-text = "12am"
-
-[node name="Timer" type="Timer" parent="Office/infoViewport/clock"]
-wait_time = 45.0
-one_shot = true
+texture = SubResource("ViewportTexture_gcavw")
 
 [node name="Hallway" type="Node3D" parent="."]
 
@@ -269,49 +242,17 @@ transform = Transform3D(-1, 6.77318e-08, -3.8466e-06, 5.9609e-08, -0.999999, -3.
 mesh = SubResource("PlaneMesh_bxarc")
 skeleton = NodePath("../..")
 
-[node name="CameraViewports" type="Node3D" parent="."]
-
-[node name="Cam01" type="SubViewport" parent="CameraViewports"]
+[node name="Cam01" type="SubViewport" parent="Hallway"]
 size = Vector2i(600, 400)
 
-[node name="cam01" type="Camera3D" parent="CameraViewports/Cam01"]
+[node name="cam01" type="Camera3D" parent="Hallway/Cam01"]
 transform = Transform3D(0.915261, 0, -0.402861, 0, 1, 0, 0.402861, 0, 0.915261, -2.50832, 0.820703, -1.04069)
 
-[node name="CamText01" type="Label" parent="CameraViewports/Cam01"]
-custom_minimum_size = Vector2(6.095, 12.28)
-offset_left = 20.0
-offset_right = 202.0
-offset_bottom = 72.0
-theme_override_font_sizes/font_size = 50
-text = "CAM 01"
-
-[node name="Cam02" type="SubViewport" parent="CameraViewports"]
+[node name="Cam02" type="SubViewport" parent="Hallway"]
 size = Vector2i(600, 400)
 
-[node name="cam02" type="Camera3D" parent="CameraViewports/Cam02"]
+[node name="cam02" type="Camera3D" parent="Hallway/Cam02"]
 transform = Transform3D(0.790499, 0, 0.612464, 0, 1, 0, -0.612464, 0, 0.790499, 2.55549, 0.338335, -0.471992)
-
-[node name="CamText02" type="Label" parent="CameraViewports/Cam02"]
-custom_minimum_size = Vector2(6.095, 12.28)
-offset_left = 20.0
-offset_right = 202.0
-offset_bottom = 72.0
-theme_override_font_sizes/font_size = 50
-text = "CAM 02"
-
-[node name="Cam03" type="SubViewport" parent="CameraViewports"]
-size = Vector2i(600, 400)
-
-[node name="cam03" type="Camera3D" parent="CameraViewports/Cam03"]
-transform = Transform3D(-0.967862, 0, 0.25148, 0, 1, 0, -0.25148, 0, -0.967862, 2.19407, 0.338335, -2.47709)
-
-[node name="CamText03" type="Label" parent="CameraViewports/Cam03"]
-custom_minimum_size = Vector2(6.095, 12.28)
-offset_left = 20.0
-offset_right = 202.0
-offset_bottom = 72.0
-theme_override_font_sizes/font_size = 50
-text = "CAM 03"
 
 [connection signal="input_event" from="Office/DoorButtonLeft" to="Office/DoorLeft" method="_on_door_button_left_input_event"]
 [connection signal="input_event" from="Office/DoorButtonLeft" to="Office/DoorButtonLeft" method="_on_input_event"]

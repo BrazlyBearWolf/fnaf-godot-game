@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c5ngw4bt3p4xf"]
 
-[ext_resource type="Script" path="res://Scenes/WinScreen.gd" id="1_75lsj"]
+[ext_resource type="Script" path="res://Scripts/WinScreen.gd" id="1_arpvg"]
 
 [sub_resource type="Animation" id="Animation_jis15"]
 length = 0.001
@@ -40,7 +40,7 @@ _data = {
 }
 
 [node name="Win" type="Node2D"]
-script = ExtResource("1_75lsj")
+script = ExtResource("1_arpvg")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
