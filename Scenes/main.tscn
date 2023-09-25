@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://50kom4qaawgj"]
+[gd_scene load_steps=27 format=3 uid="uid://50kom4qaawgj"]
 
 [ext_resource type="Script" path="res://Scripts/clock.gd" id="1_2qt4j"]
 [ext_resource type="Script" path="res://Scripts/CameraScript.gd" id="1_5f3g1"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://Scripts/Door_scripts/doorRightScript.gd" id="7_a405u"]
 [ext_resource type="Script" path="res://Scripts/Door_scripts/door_button_right.gd" id="8_lg67j"]
 [ext_resource type="Script" path="res://Scripts/SecurityDesk.gd" id="11_e841g"]
+[ext_resource type="Script" path="res://Scenes/EnemyScript1.gd" id="12_43rra"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7un73"]
 size = Vector2(4, 3)
@@ -45,6 +46,8 @@ viewport_path = NodePath("Office/infoViewport")
 [sub_resource type="BoxMesh" id="BoxMesh_ntl3m"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_bxarc"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_2tpk3"]
 
 [node name="Main" type="Node3D"]
 
@@ -236,7 +239,7 @@ transform = Transform3D(-7.69321e-07, 0, 0.4, 0, 1, 0, -3.52, 0, -8.74228e-08, -
 mesh = SubResource("PlaneMesh_bxarc")
 
 [node name="CorridorLeft2" type="MeshInstance3D" parent="Hallway/CorridorLeft"]
-transform = Transform3D(-1, 6.25868e-08, -2.81714e-08, -2.4836e-08, -4.37113e-08, 1.13429, 6.25867e-08, 1, 4.95816e-08, -8.9407e-08, 0, -0.97202)
+transform = Transform3D(-1, 6.25868e-08, -2.81714e-08, -2.4836e-08, -4.37113e-08, 1.13429, 6.25867e-08, 1, 4.95816e-08, -1.19209e-07, 0, -0.97202)
 mesh = SubResource("PlaneMesh_bxarc")
 skeleton = NodePath("../..")
 
@@ -275,7 +278,7 @@ skeleton = NodePath("../..")
 size = Vector2i(600, 400)
 
 [node name="cam01" type="Camera3D" parent="CameraViewports/Cam01"]
-transform = Transform3D(0.915261, 0, -0.402861, 0, 1, 0, 0.402861, 0, 0.915261, -2.50832, 0.820703, -1.04069)
+transform = Transform3D(-0.99164, 0, -0.129035, 0, 1, 0, 0.129035, 0, -0.99164, -2.50832, 0.820703, -3.96371)
 
 [node name="CamText01" type="Label" parent="CameraViewports/Cam01"]
 custom_minimum_size = Vector2(6.095, 12.28)
@@ -312,6 +315,27 @@ offset_right = 202.0
 offset_bottom = 72.0
 theme_override_font_sizes/font_size = 50
 text = "CAM 03"
+
+[node name="Enemies" type="Node3D" parent="."]
+
+[node name="enemy1" type="Node3D" parent="Enemies" node_paths=PackedStringArray("attackTimer", "chanceTimer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.41265, 0.568527, -0.502478)
+script = ExtResource("12_43rra")
+attackTimer = NodePath("AttackTimer")
+chanceTimer = NodePath("ChanceTimer")
+moveLocations = Array[Transform3D]([Transform3D(1.1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0), Transform3D(1.1, 0, 0, 0, 1, 0, -0.2, 0, 1, 0, 0, 0), Transform3D(1.1, 0, 0, 0, 1, 0, -2, 0, 1, 0, 0, 0), Transform3D(1.1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)])
+deathLocation = Transform3D(0.1, 0, 0, 0, 1, 0, -2.5, 0, 1, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Enemies/enemy1"]
+transform = Transform3D(0.176429, 0, 0, 0, 0.177366, 0, 0, 0, 0.241216, -2.01457, 0.278501, -2.78778)
+mesh = SubResource("BoxMesh_2tpk3")
+
+[node name="ChanceTimer" type="Timer" parent="Enemies/enemy1"]
+one_shot = true
+
+[node name="AttackTimer" type="Timer" parent="Enemies/enemy1"]
+wait_time = 3.0
+one_shot = true
 
 [connection signal="input_event" from="Office/DoorButtonLeft" to="Office/DoorLeft" method="_on_door_button_left_input_event"]
 [connection signal="input_event" from="Office/DoorButtonLeft" to="Office/DoorButtonLeft" method="_on_input_event"]
