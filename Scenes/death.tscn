@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://wdewc0a4g8js"]
+
+[node name="death" type="Node2D"]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_right = 1153.0
+offset_bottom = 646.0
+theme_override_font_sizes/normal_font_size = 246
+text = "You die :("
