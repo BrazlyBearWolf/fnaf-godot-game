@@ -11,6 +11,8 @@ extends Node3D
 @export_category("Charateristics")
 @export var aiLevel_int := 10
 
+
+
 var dice: int
 var moveIndex_int :=0
 var initializeAttack_bool := false
@@ -23,6 +25,7 @@ func _ready():
 	pass # Replace with function body.
 
 func _Attack_Player():
+	PlayerVariables.isDead_bool = true
 	get_tree().change_scene_to_file("res://Scenes/death.tscn")
 
 func _Move_Enemy():

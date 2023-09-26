@@ -1,6 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://50kom4qaawgj"]
+[gd_scene load_steps=28 format=3 uid="uid://50kom4qaawgj"]
 
 [ext_resource type="Script" path="res://Scripts/clock.gd" id="1_2qt4j"]
+[ext_resource type="Script" path="res://Scripts/PlayerVariables.gd" id="1_3mh27"]
 [ext_resource type="Script" path="res://Scripts/CameraScript.gd" id="1_5f3g1"]
 [ext_resource type="Script" path="res://Scripts/power_usage.gd" id="1_7etot"]
 [ext_resource type="PackedScene" uid="uid://difus73thjkia" path="res://Scenes/door_objects/door.tscn" id="1_p4c8v"]
@@ -49,7 +50,9 @@ viewport_path = NodePath("Office/infoViewport")
 
 [sub_resource type="BoxMesh" id="BoxMesh_2tpk3"]
 
-[node name="Main" type="Node3D"]
+[node name="Main" type="Node3D" node_paths=PackedStringArray("countDownTimer")]
+script = ExtResource("1_3mh27")
+countDownTimer = NodePath("Office/infoViewport/clock/ClockTimer")
 
 [node name="Office" type="Node3D" parent="."]
 
@@ -218,7 +221,7 @@ position = Vector2(580, 326)
 
 [node name="clock" type="Node2D" parent="Office/infoViewport" node_paths=PackedStringArray("countDownTimer")]
 script = ExtResource("1_2qt4j")
-countDownTimer = NodePath("Timer")
+countDownTimer = NodePath("ClockTimer")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Office/infoViewport/clock"]
 offset_left = 720.69
@@ -228,7 +231,7 @@ offset_bottom = 167.035
 theme_override_font_sizes/normal_font_size = 101
 text = "12am"
 
-[node name="Timer" type="Timer" parent="Office/infoViewport/clock"]
+[node name="ClockTimer" type="Timer" parent="Office/infoViewport/clock"]
 wait_time = 45.0
 one_shot = true
 
