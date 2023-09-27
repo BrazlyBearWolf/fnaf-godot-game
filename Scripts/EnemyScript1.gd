@@ -6,11 +6,13 @@ class_name EnemyScript1
 @export_group("Timers")
 @export var attackTimer: Timer
 @export var chanceTimer: Timer
+@export var shutdownDeathTimer: Timer
 @export_group("Location Arrays")
 @export var moveLocations: Array[Transform3D]
 @export var deathLocation: Transform3D
 @export_category("Charateristics")
 @export var aiLevel_int := 10
+
 
 var newMoveIndex: int
 
@@ -31,24 +33,29 @@ func _Attack_Player():
 
 func _Move_Enemy():
 	
+	if PlayerVariables.powerShutdown_bool == true and shutdownDeathTimer.is_stopped():
+		newMoveIndex += 1
+		shutdownDeathTimer.start()
+		print(newMoveIndex)
 	
-	
-	if newMoveIndex > 0:
-		var randomForwardback: int
+	if PlayerVariables.powerShutdown_bool == false:
 		
-		randomForwardback = randi_range(0, randi_range(0, 1))
-		
-		match randomForwardback:
-			0:
-				newMoveIndex = newMoveIndex + randi_range(newMoveIndex, newMoveIndex + 1)
-			1:
-				newMoveIndex = newMoveIndex - 1
-				
-	else:
-		newMoveIndex = newMoveIndex + 1
-		
+		if newMoveIndex > 0:
+			var randomForwardback: int
+			
+			randomForwardback = randi_range(0, randi_range(0, 1))
+			
+			match randomForwardback:
+				0:
+					newMoveIndex = newMoveIndex + randi_range(newMoveIndex, newMoveIndex + 1)
+				1:
+					newMoveIndex = newMoveIndex - 1
+					
+		else:
+			newMoveIndex = newMoveIndex + 1
+			
 	if newMoveIndex > moveLocations.size() - 1:
-		newMoveIndex = 0
+		newMoveIndex = moveLocations.size() - 1
 		
 	moveIndex_int = newMoveIndex
 	
@@ -61,18 +68,11 @@ func _Move_Enemy():
 		attackTimer.start()
 
 
-			
-	
-	
-
-
 func _Chance_To_Move():
 	dice = randi_range(0, 20)
 	chanceTimer.start()
-	print("chance to move")
 	if dice < aiLevel_int:
 		_Move_Enemy()
-		print("success")
 	else:
 		pass
 	

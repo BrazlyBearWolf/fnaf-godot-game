@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://ke66pgu4a0c0"]
+
+[ext_resource type="Script" path="res://Scripts/EnemyScript1.gd" id="1_r6gul"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_2tpk3"]
+
+[node name="enemy1" type="Node3D" node_paths=PackedStringArray("attackTimer", "chanceTimer", "shutdownDeathTimer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.41265, 0.568527, -0.502478)
+script = ExtResource("1_r6gul")
+attackTimer = NodePath("AttackTimer")
+chanceTimer = NodePath("ChanceTimer")
+shutdownDeathTimer = NodePath("ShutdownDeathTimer")
+moveLocations = Array[Transform3D]([Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0), Transform3D(1, 0, 0, 0, 1, 0, -0.4, 0, 1, 0, 0, 0), Transform3D(1, 0, 0, 0, 1, 0, -1.7, 0, 1, 0, 0, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)])
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.176429, 0, 0, 0, 0.177366, 0, 0, 0, 0.241216, -2.01457, 0.278501, -2.78778)
+mesh = SubResource("BoxMesh_2tpk3")
+
+[node name="ChanceTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="ShutdownDeathTimer" type="Timer" parent="."]
+one_shot = true
