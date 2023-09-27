@@ -8,8 +8,6 @@ func _ready():
 	pass # Replace with function body.
 
 func _Toggle_Door_Light():
-	
-
 	if PlayerVariables.leftDoorIndex_int == 1:
 		light.hide()
 	else:
