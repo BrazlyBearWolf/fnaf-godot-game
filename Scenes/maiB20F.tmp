@@ -11,9 +11,8 @@
 [ext_resource type="Script" path="res://Scripts/Door_scripts/doorRightScript.gd" id="7_a405u"]
 [ext_resource type="Script" path="res://Scripts/Door_scripts/door_button_right.gd" id="8_lg67j"]
 [ext_resource type="Script" path="res://Scripts/SecurityDesk.gd" id="11_e841g"]
-[ext_resource type="PackedScene" uid="uid://ke66pgu4a0c0" path="res://Scenes/Enemies/enemy_1.tscn" id="13_fs41x"]
-[ext_resource type="PackedScene" uid="uid://chkipn1s5i87t" path="res://Scenes/lights/office_light.tscn" id="13_kiyjf"]
-[ext_resource type="PackedScene" uid="uid://csa526h3h5uar" path="res://Scenes/Enemies/enemy_2.tscn" id="14_3fmj2"]
+[ext_resource type="Script" path="res://Scripts/EnemyScript1.gd" id="12_b11yp"]
+[ext_resource type="Script" path="res://Scripts/EnviroLights.gd" id="12_f7sbt"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7un73"]
 size = Vector2(4, 3)
@@ -48,6 +47,8 @@ viewport_path = NodePath("Office/infoViewport")
 [sub_resource type="BoxMesh" id="BoxMesh_ntl3m"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_bxarc"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_2tpk3"]
 
 [node name="Main" type="Node3D" node_paths=PackedStringArray("countDownTimer")]
 script = ExtResource("1_3mh27")
@@ -230,8 +231,10 @@ wait_time = 45.0
 one_shot = true
 
 [node name="EnviroLights" type="Node3D" parent="Office"]
+script = ExtResource("12_f7sbt")
 
-[node name="OmniLight3D" parent="Office/EnviroLights" instance=ExtResource("13_kiyjf")]
+[node name="OmniLight3D" type="OmniLight3D" parent="Office/EnviroLights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.628352, 0.740143)
 
 [node name="Hallway" type="Node3D" parent="."]
 
@@ -319,10 +322,24 @@ text = "CAM 03"
 
 [node name="Enemies" type="Node3D" parent="."]
 
-[node name="enemy1" parent="Enemies" instance=ExtResource("13_fs41x")]
+[node name="enemy1" type="Node3D" parent="Enemies" node_paths=PackedStringArray("attackTimer", "chanceTimer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.41265, 0.568527, -0.502478)
+script = ExtResource("12_b11yp")
+attackTimer = NodePath("AttackTimer")
+chanceTimer = NodePath("ChanceTimer")
+moveLocations = Array[Transform3D]([Transform3D(1.1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0), Transform3D(1.1, 0, 0, 0, 1, 0, -0.2, 0, 1, 0, 0, 0), Transform3D(1.1, 0, 0, 0, 1, 0, -2, 0, 1, 0, 0, 0), Transform3D(1.1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)])
+deathLocation = Transform3D(0.1, 0, 0, 0, 1, 0, -2.5, 0, 1, 0, 0, 0)
 
-[node name="enemy2" parent="Enemies" instance=ExtResource("14_3fmj2")]
-moveLocations = Array[Transform3D]([Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0), Transform3D(1, 0, 0, 0, 1, 0, 0.3, 0, 1, 0, 0, 0), Transform3D(1, 0, 0, 0, 1, 0, 1.6, 0, 1, 0, 0, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)])
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Enemies/enemy1"]
+transform = Transform3D(0.176429, 0, 0, 0, 0.177366, 0, 0, 0, 0.241216, -2.01457, 0.278501, -2.78778)
+mesh = SubResource("BoxMesh_2tpk3")
+
+[node name="ChanceTimer" type="Timer" parent="Enemies/enemy1"]
+one_shot = true
+
+[node name="AttackTimer" type="Timer" parent="Enemies/enemy1"]
+wait_time = 3.0
+one_shot = true
 
 [connection signal="input_event" from="Office/DoorButtonLeft" to="Office/DoorLeft" method="_on_door_button_left_input_event"]
 [connection signal="input_event" from="Office/DoorButtonLeft" to="Office/DoorButtonLeft" method="_on_input_event"]
