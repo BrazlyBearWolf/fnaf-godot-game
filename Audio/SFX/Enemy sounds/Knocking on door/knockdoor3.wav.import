@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d0e57cghk3vli"
+path="res://.godot/imported/knockdoor3.wav-cc87f0c9de4319d3213a85121627c98b.sample"
+
+[deps]
+
+source_file="res://Audio/SFX/Enemy sounds/Knocking on door/knockdoor3.wav"
+dest_files=["res://.godot/imported/knockdoor3.wav-cc87f0c9de4319d3213a85121627c98b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

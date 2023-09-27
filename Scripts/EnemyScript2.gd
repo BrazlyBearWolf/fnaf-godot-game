@@ -7,9 +7,12 @@ class_name EnemyScript2
 @export var attackTimer: Timer
 @export var chanceTimer: Timer
 @export var shutdownDeathTimer: Timer
+@export var timeUntilScript: Timer
 @export_group("Location Arrays")
 @export var moveLocations: Array[Transform3D]
 @export var deathLocation: Transform3D
+@export_category("SFX")
+@export var knockingDoorSrc: Array[AudioStreamPlayer3D]
 @export_category("Charateristics")
 @export var aiLevel_int := 10
 
@@ -21,8 +24,18 @@ var moveIndex_int :=0
 var initializeAttack_bool := false
 
 
+func _Knock_Door():
+	var knockIndex := 0
+	
+	var randIndex = randi_range(0, 2)
+	
+	knockIndex = randIndex
+	
+	knockingDoorSrc[knockIndex].play()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	timeUntilScript.start()
 	set_transform(moveLocations[0])
 
 	pass # Replace with function body.
@@ -81,23 +94,26 @@ func _Chance_To_Move():
 func _process(delta):
 
 # when door is open and enemy is in door, enemy can attack after a certain time
-	if attackTimer.is_stopped() \
-	and PlayerVariables.isRightDoorOpen_bool == true \
-	and initializeAttack_bool == true:
+	if timeUntilScript.is_stopped():
+			
+		if attackTimer.is_stopped() \
+		and PlayerVariables.isRightDoorOpen_bool == true \
+		and initializeAttack_bool == true:
 
-		_Attack_Player()
-	
-# when door is closed and the enemy is there. the enemy goes to a starting position
-	if attackTimer.is_stopped() \
-	and initializeAttack_bool == true \
-	and PlayerVariables.isRightDoorOpen_bool == false:
-		newMoveIndex = 0
-		chanceTimer.start()
-		attackTimer.stop()
-		initializeAttack_bool = false
-		set_transform(moveLocations[0])
-	
-# After every time the chance timer reaches 0 (and the enemy  isn't attacking) they have a chance to move
-	if chanceTimer.is_stopped() and initializeAttack_bool == false:
-		_Chance_To_Move()
+			_Attack_Player()
+		
+	# when door is closed and the enemy is there. the enemy goes to a starting position
+		if attackTimer.is_stopped() \
+		and initializeAttack_bool == true \
+		and PlayerVariables.isRightDoorOpen_bool == false:
+			newMoveIndex = 0
+			chanceTimer.start()
+			attackTimer.stop()
+			initializeAttack_bool = false
+			_Knock_Door()
+			set_transform(moveLocations[0])
+		
+	# After every time the chance timer reaches 0 (and the enemy  isn't attacking) they have a chance to move
+		if chanceTimer.is_stopped() and initializeAttack_bool == false:
+			_Chance_To_Move()
 	

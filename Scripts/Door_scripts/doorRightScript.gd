@@ -54,4 +54,5 @@ func _on_door_buttonright_input_event(camera, event, position, normal, shape_idx
 	and PlayerVariables.powerShutdown_bool == false:
 
 		_Open_Right_door()
+		$doorAudio.play()
 	pass # Replace with function body.

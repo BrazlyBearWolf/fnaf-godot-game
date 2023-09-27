@@ -15,7 +15,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
-	timeSecs_f = timeSecs_f - delta * PlayerVariables.powerUsage_int
+	timeSecs_f = timeSecs_f - delta * PlayerVariables.powerUsage_int * 2
+		
 	
 	if PlayerVariables.powerUsage_int >1:
 		$Usage2.show()

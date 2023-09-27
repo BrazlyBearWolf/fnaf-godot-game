@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://50kom4qaawgj"]
+[gd_scene load_steps=29 format=3 uid="uid://50kom4qaawgj"]
 
 [ext_resource type="Script" path="res://Scripts/clock.gd" id="1_2qt4j"]
 [ext_resource type="Script" path="res://Scripts/PlayerVariables.gd" id="1_3mh27"]
@@ -8,14 +8,13 @@
 [ext_resource type="PackedScene" uid="uid://d277ithowb5ox" path="res://Scenes/door_objects/door_button.tscn" id="2_1usyn"]
 [ext_resource type="Script" path="res://Scripts/Door_scripts/door_button.gd" id="4_1hc50"]
 [ext_resource type="PackedScene" uid="uid://wl5lgdkwykf2" path="res://Scenes/door_objects/doorRight.tscn" id="6_8c2ka"]
+[ext_resource type="Script" path="res://Scripts/Door_scripts/doorRightScript.gd" id="7_a405u"]
 [ext_resource type="Script" path="res://Scripts/Door_scripts/door_button_right.gd" id="8_lg67j"]
-[ext_resource type="AudioStream" uid="uid://sbiqtf5sbmoo" path="res://Audio/Foley/cams/cam-switch.wav" id="9_7nu6f"]
 [ext_resource type="Script" path="res://Scripts/SecurityDesk.gd" id="11_e841g"]
 [ext_resource type="Script" path="res://Scenes/hintScript.gd" id="13_3x1cx"]
 [ext_resource type="PackedScene" uid="uid://ke66pgu4a0c0" path="res://Scenes/Enemies/enemy_1.tscn" id="13_fs41x"]
 [ext_resource type="PackedScene" uid="uid://chkipn1s5i87t" path="res://Scenes/lights/office_light.tscn" id="13_kiyjf"]
 [ext_resource type="PackedScene" uid="uid://csa526h3h5uar" path="res://Scenes/Enemies/enemy_2.tscn" id="14_3fmj2"]
-[ext_resource type="AudioStream" uid="uid://cglhk8623aryi" path="res://Audio/Music/Ambience/ES_Bed Ethereal Swell - SFX Producer.mp3" id="15_4bf4k"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7un73"]
 size = Vector2(4, 3)
@@ -50,12 +49,6 @@ viewport_path = NodePath("Office/infoViewport")
 [sub_resource type="BoxMesh" id="BoxMesh_ntl3m"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_bxarc"]
-
-[sub_resource type="Environment" id="Environment_30li3"]
-
-[sub_resource type="Environment" id="Environment_2vpee"]
-
-[sub_resource type="Environment" id="Environment_hkt8t"]
 
 [node name="Main" type="Node3D" node_paths=PackedStringArray("countDownTimer")]
 script = ExtResource("1_3mh27")
@@ -116,6 +109,7 @@ wait_time = 0.299
 one_shot = true
 
 [node name="doorRight" parent="Office" node_paths=PackedStringArray("doorCooldown") instance=ExtResource("6_8c2ka")]
+script = ExtResource("7_a405u")
 doorCooldown = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="Office/doorRight"]
@@ -185,10 +179,6 @@ texture = SubResource("ViewportTexture_x6s0a")
 wait_time = 0.2
 one_shot = true
 
-[node name="camSwitchSFX" type="AudioStreamPlayer3D" parent="Office/SecurityDesk"]
-stream = ExtResource("9_7nu6f")
-volume_db = -12.0
-
 [node name="infoViewport" type="SubViewport" parent="Office"]
 transparent_bg = true
 size = Vector2i(1037, 727)
@@ -244,14 +234,12 @@ one_shot = true
 
 [node name="OmniLight3D" parent="Office/EnviroLights" instance=ExtResource("13_kiyjf")]
 
-[node name="UI" type="Control" parent="Office" node_paths=PackedStringArray("hint", "timer")]
+[node name="UI" type="Control" parent="Office"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("13_3x1cx")
-hint = [NodePath("hint#1"), NodePath("hint#2"), NodePath("hint#3")]
-timer = NodePath("Timer")
 
 [node name="hint#1" type="RichTextLabel" parent="Office/UI"]
 layout_mode = 0
@@ -266,18 +254,6 @@ offset_right = 1089.0
 offset_bottom = 63.0
 theme_override_font_sizes/normal_font_size = 41
 text = "Click the red buttons to close the doors."
-
-[node name="hint#3" type="RichTextLabel" parent="Office/UI"]
-layout_mode = 0
-offset_right = 1089.0
-offset_bottom = 114.0
-theme_override_font_sizes/normal_font_size = 41
-text = "Closing doors drains power. If you run out of power
-you can't use the doors anymore."
-
-[node name="Timer" type="Timer" parent="Office/UI"]
-wait_time = 5.0
-one_shot = true
 
 [node name="Hallway" type="Node3D" parent="."]
 
@@ -326,7 +302,6 @@ size = Vector2i(600, 400)
 
 [node name="cam01" type="Camera3D" parent="CameraViewports/Cam01"]
 transform = Transform3D(-0.99164, 0, -0.129035, 0, 1, 0, 0.129035, 0, -0.99164, -2.50832, 0.820703, -3.96371)
-environment = SubResource("Environment_30li3")
 
 [node name="CamText01" type="Label" parent="CameraViewports/Cam01"]
 custom_minimum_size = Vector2(6.095, 12.28)
@@ -341,7 +316,6 @@ size = Vector2i(600, 400)
 
 [node name="cam02" type="Camera3D" parent="CameraViewports/Cam02"]
 transform = Transform3D(0.790499, 0, 0.612464, 0, 1, 0, -0.612464, 0, 0.790499, 2.55549, 0.338335, -0.471992)
-environment = SubResource("Environment_2vpee")
 
 [node name="CamText02" type="Label" parent="CameraViewports/Cam02"]
 custom_minimum_size = Vector2(6.095, 12.28)
@@ -356,7 +330,6 @@ size = Vector2i(600, 400)
 
 [node name="cam03" type="Camera3D" parent="CameraViewports/Cam03"]
 transform = Transform3D(-0.967862, 0, 0.25148, 0, 1, 0, -0.25148, 0, -0.967862, 2.19407, 0.338335, -2.47709)
-environment = SubResource("Environment_hkt8t")
 
 [node name="CamText03" type="Label" parent="CameraViewports/Cam03"]
 custom_minimum_size = Vector2(6.095, 12.28)
@@ -372,11 +345,6 @@ text = "CAM 03"
 
 [node name="enemy2" parent="Enemies" instance=ExtResource("14_3fmj2")]
 moveLocations = Array[Transform3D]([Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0), Transform3D(1, 0, 0, 0, 1, 0, 0.3, 0, 1, 0, 0, 0), Transform3D(1, 0, 0, 0, 1, 0, 1.6, 0, 1, 0, 0, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)])
-
-[node name="Ambience" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("15_4bf4k")
-volume_db = -5.0
-autoplay = true
 
 [connection signal="input_event" from="Office/DoorButtonLeft" to="Office/DoorLeft" method="_on_door_button_left_input_event"]
 [connection signal="input_event" from="Office/DoorButtonLeft" to="Office/DoorButtonLeft" method="_on_input_event"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c5ngw4bt3p4xf"]
+[gd_scene load_steps=6 format=3 uid="uid://c5ngw4bt3p4xf"]
 
 [ext_resource type="Script" path="res://Scripts/WinScreen.gd" id="1_arpvg"]
+[ext_resource type="AudioStream" uid="uid://btww8v5qjjo1c" path="res://Audio/SFX/6am-win.wav" id="2_ocvh4"]
 
 [sub_resource type="Animation" id="Animation_jis15"]
 length = 0.001
@@ -78,3 +79,7 @@ root_node = NodePath("../RichTextLabel")
 libraries = {
 "": SubResource("AnimationLibrary_fjebn")
 }
+
+[node name="winSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_ocvh4")
+autoplay = true
