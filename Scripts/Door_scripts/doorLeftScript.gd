@@ -29,6 +29,7 @@ func _Open_Left_door():
 	if PlayerVariables.leftDoorIndex_int == 0:
 		PlayerVariables.isLeftDoorOpen_bool = false
 		$AnimationPlayer.play("close_door")
+
 		PlayerVariables.powerUsage_int = PlayerVariables.powerUsage_int + 1
 	
 	doorCooldown.start()
@@ -54,4 +55,5 @@ func _on_door_button_left_input_event(camera, event, position, normal, shape_idx
 	if event is InputEventMouseButton and PlayerVariables.canOpenLeftDoor_bool == true \
 	and PlayerVariables.powerShutdown_bool == false:
 		_Open_Left_door()
+		$doorClose.play()
 	pass # Replace with function body.

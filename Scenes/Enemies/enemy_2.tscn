@@ -1,15 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://csa526h3h5uar"]
+[gd_scene load_steps=6 format=3 uid="uid://csa526h3h5uar"]
 
 [ext_resource type="Script" path="res://Scripts/EnemyScript2.gd" id="1_3kl1x"]
+[ext_resource type="AudioStream" uid="uid://ckkkh6lqh0rv0" path="res://Audio/SFX/Enemy sounds/Knocking on door/knockdoor1.wav" id="2_0nfv5"]
+[ext_resource type="AudioStream" uid="uid://chyhfta7pkrfq" path="res://Audio/SFX/Enemy sounds/Knocking on door/knockdoor2.wav" id="3_yjo7p"]
+[ext_resource type="AudioStream" uid="uid://d0e57cghk3vli" path="res://Audio/SFX/Enemy sounds/Knocking on door/knockdoor3.wav" id="4_44fq0"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_tuiwr"]
 
-[node name="enemy2" type="Node3D" node_paths=PackedStringArray("attackTimer", "chanceTimer", "shutdownDeathTimer")]
+[node name="enemy2" type="Node3D" node_paths=PackedStringArray("attackTimer", "chanceTimer", "shutdownDeathTimer", "timeUntilScript", "knockingDoorSrc")]
 script = ExtResource("1_3kl1x")
 attackTimer = NodePath("AttackTimer")
 chanceTimer = NodePath("ChanceTimer")
 shutdownDeathTimer = NodePath("ShutdownDeathTimer")
+timeUntilScript = NodePath("timeUntilScript")
 moveLocations = Array[Transform3D]([Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0), Transform3D(1, 0, 0, 0, 1, 0, -0.2, 0, 1, 0, 0, 0), Transform3D(1, 0, 0, 0, 1, 0, -1.7, 0, 1, 0, 0, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)])
+knockingDoorSrc = [NodePath("knockdoor1"), NodePath("knockdoor2"), NodePath("knockdoor3")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.176429, 0, 0, 0, 0.177366, 0, 0, 0, 0.241216, 2.14462, 0.278501, -2.78778)
@@ -24,3 +29,16 @@ one_shot = true
 
 [node name="ShutdownDeathTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="timeUntilScript" type="Timer" parent="."]
+wait_time = 60.0
+one_shot = true
+
+[node name="knockdoor1" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_0nfv5")
+
+[node name="knockdoor2" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_yjo7p")
+
+[node name="knockdoor3" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_44fq0")

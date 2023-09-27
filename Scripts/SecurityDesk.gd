@@ -24,7 +24,7 @@ func _Next_Cam():
 		newIndex = 0
 	
 	cameraIndex_int = newIndex
-	
+	$camSwitchSFX.play()
 	
 	for i in cameras.size():
 		cameras[i].hide()
@@ -42,7 +42,7 @@ func _Previous_Cam():
 		newIndex = cameras.size() - 1
 	
 	cameraIndex_int = newIndex
-	
+	$camSwitchSFX.play()
 	
 	for i in cameras.size():
 		cameras[i].hide()
@@ -55,13 +55,13 @@ func _Switch_Cooldown():
 
 func _process(delta):
 
-	if Input.is_action_just_pressed("ToggleLeftDoor"):
+	if Input.is_action_just_pressed("ToggleRightDoor"):
 		_Switch_Cooldown()
 		if canSwitch == true:
 			_Next_Cam()
 			
 		else: pass
-	if Input.is_action_just_pressed("ToggleRightDoor"):
+	if Input.is_action_just_pressed("ToggleLeftDoor"):
 		_Switch_Cooldown()
 		if canSwitch == true:
 			_Previous_Cam()
