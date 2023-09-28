@@ -10,8 +10,12 @@ var rightDoorIndex_int := 1
 
 
 var powerUsage_int := 1
-var powerShutdown_bool := false
+var powerShutdown_bool: bool
 
 var isDead_bool := false
 
 @export var countDownTimer: Timer
+
+
+func _ready():
+	powerShutdown_bool = false

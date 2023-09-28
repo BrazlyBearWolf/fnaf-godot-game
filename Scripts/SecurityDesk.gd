@@ -6,10 +6,14 @@ extends Node3D
 
 var canSwitch := false
 
-var cameraIndex_int := 0
+var cameraIndex_int: int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	cameraIndex_int = 0
+	for i in cameras.size():
+		cameras[i].hide()
+		cameras[cameraIndex_int].show()
 	switchCooldown.start()
 	pass # Replace with function body.
 
