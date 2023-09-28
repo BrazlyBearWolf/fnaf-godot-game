@@ -39,7 +39,7 @@ viewport_path = NodePath("CameraViewports/Cam01")
 [sub_resource type="ViewportTexture" id="ViewportTexture_ndo3t"]
 viewport_path = NodePath("CameraViewports/Cam02")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_kclfk"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_ar2t2"]
 viewport_path = NodePath("CameraViewports/Cam03")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_x6s0a"]
@@ -175,7 +175,7 @@ texture = SubResource("ViewportTexture_ndo3t")
 
 [node name="cam03" type="Sprite3D" parent="Office/SecurityDesk"]
 transform = Transform3D(0.087, 0, 0, 0, 0.132426, 0, 0, 0, 0.063, -0.0701576, 0.507906, 2.04031)
-texture = SubResource("ViewportTexture_kclfk")
+texture = SubResource("ViewportTexture_ar2t2")
 
 [node name="info" type="Sprite3D" parent="Office/SecurityDesk"]
 transform = Transform3D(0.0547912, 0, 0, 0, 0.0833997, 0, 0, 0, 0.063, -0.079838, 0.488529, 2.05575)
@@ -192,6 +192,7 @@ volume_db = -12.0
 [node name="infoViewport" type="SubViewport" parent="Office"]
 transparent_bg = true
 size = Vector2i(1037, 727)
+render_target_update_mode = 3
 
 [node name="Usage" type="Node2D" parent="Office/infoViewport"]
 script = ExtResource("1_7etot")
@@ -323,6 +324,7 @@ skeleton = NodePath("../..")
 
 [node name="Cam01" type="SubViewport" parent="CameraViewports"]
 size = Vector2i(600, 400)
+render_target_update_mode = 3
 
 [node name="cam01" type="Camera3D" parent="CameraViewports/Cam01"]
 transform = Transform3D(-0.99164, 0, -0.129035, 0, 1, 0, 0.129035, 0, -0.99164, -2.50832, 0.820703, -3.96371)
@@ -338,6 +340,7 @@ text = "CAM 01"
 
 [node name="Cam02" type="SubViewport" parent="CameraViewports"]
 size = Vector2i(600, 400)
+render_target_update_mode = 3
 
 [node name="cam02" type="Camera3D" parent="CameraViewports/Cam02"]
 transform = Transform3D(0.790499, 0, 0.612464, 0, 1, 0, -0.612464, 0, 0.790499, 2.55549, 0.338335, -0.471992)
@@ -353,6 +356,7 @@ text = "CAM 02"
 
 [node name="Cam03" type="SubViewport" parent="CameraViewports"]
 size = Vector2i(600, 400)
+render_target_update_mode = 3
 
 [node name="cam03" type="Camera3D" parent="CameraViewports/Cam03"]
 transform = Transform3D(-0.967862, 0, 0.25148, 0, 1, 0, -0.25148, 0, -0.967862, 2.19407, 0.338335, -2.47709)

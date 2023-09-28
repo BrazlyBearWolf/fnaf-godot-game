@@ -1,6 +1,6 @@
 extends Node
 
-var power_int := 100
+var power_int := 3
 
 var timeSecs_f := 5.0
 
